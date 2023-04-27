@@ -8,9 +8,13 @@ document.getElementById('search-input').addEventListener('keyup', async (e) => {
     // Use es6
 
     const res = await fetch('http://localhost:8000/')
-    const json = await res.json()
+    let json = await res.json()
+    const query = document.getElementById("search-input").value;
 
-    const result = `<li>${json.join('</li><li>')}</li>`
+    json = json.filter((data) => data.name.includes(query));
+
+    const results = json.map((data) => `${data.name}`);
+    const result = `<li>${results.join('</li><li>')}</li>`
     document.getElementById('results').innerHTML = result
 
 })
